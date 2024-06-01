@@ -8,7 +8,7 @@ module.exports = (req, res) => {
             body += chunk;
     });
 
-    req.on('end', async () => {
+    req.on('end', () => {
         const parsedBody = new URLSearchParams(body);
         const user = {};
 
@@ -16,9 +16,9 @@ module.exports = (req, res) => {
                 user[key] = value;
         })
 
-        await db.addUser(user);
-
-        res.writeHead(201);
-        res.end(JSON.stringify(user));
+        db.addUser(user).then(() =>{
+            res.writeHead(201);
+            res.end(JSON.stringify(user));
+        });
     });
 };
