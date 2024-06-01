@@ -1,4 +1,3 @@
-const data = require('../dataUsers');
 const db = require('../sql3-data');
 
 module.exports = (req, res) => {
@@ -8,7 +7,7 @@ module.exports = (req, res) => {
         body += chunk;
     });
 
-    req.on('end', async () => {
+    req.on('end', () => {
         const parsedBody = new URLSearchParams(body);
         const id = parsedBody.get('id');
 

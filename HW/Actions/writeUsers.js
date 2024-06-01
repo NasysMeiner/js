@@ -1,4 +1,3 @@
-const data = require('../dataUsers');
 const db = require('../sql3-data');
 
 module.exports = async (req, res) =>{

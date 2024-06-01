@@ -1,4 +1,3 @@
-const data = require('../dataUsers');
 const db = require('../sql3-data');
 
 module.exports = (req,res) => {
@@ -8,7 +7,7 @@ module.exports = (req,res) => {
         body += chunk;
     });
 
-    req.on('end', async () => {
+    req.on('end', () => {
         const parsedBody = new URLSearchParams(body);
         const id = parsedBody.get('id');
 
@@ -18,14 +17,14 @@ module.exports = (req,res) => {
             user[key] = value;
         })
 
-        user = await db.updateUser(id, user);
-
-        if(user){
-            res.writeHead(200);
-            res.end(JSON.stringify(user));
-        } else{
-            res.writeHead(400);
-            res.end(JSON.stringify(`user not founded`));
-        }
+        db.updateUser(id, user).then((user) => {
+            if(user){
+                res.writeHead(200);
+                res.end(JSON.stringify(user));
+            } else{
+                res.writeHead(400);
+                res.end(JSON.stringify(`user not founded`));
+            }
+        });
     });
 };

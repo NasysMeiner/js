@@ -1,4 +1,3 @@
-const data = require('../dataUsers');
 const db = require('../sql3-data');
 
 module.exports = (req, res) => {
@@ -13,7 +12,7 @@ module.exports = (req, res) => {
         const user = {};
 
         parsedBody.forEach((value, key) => {
-                user[key] = value;
+            user[key] = value;
         })
 
         db.addUser(user).then(() =>{
